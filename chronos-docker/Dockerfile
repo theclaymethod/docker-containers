@@ -14,8 +14,6 @@ RUN apt-get update
 
 RUN apt-get -f -y install chronos=$VERSION_CHRONOS
 
-# we don't want to use localhost as zk_host
-RUN rm /etc/mesos/zk
 # don't set http_port 
 RUN rm /etc/chronos/conf/http_port
 

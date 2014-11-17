@@ -13,7 +13,7 @@ RUN echo "deb http://repos.mesosphere.io/ubuntu trusty main" > /etc/apt/sources.
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
 RUN apt-get update
 
-RUN apt-get -f -y install chronos=$VERSION_CHRONOS mesos=VERSION_MESOS
+RUN apt-get -f -y install chronos=$VERSION_CHRONOS mesos=$VERSION_MESOS
 
 # don't set http_port 
 RUN rm /etc/chronos/conf/http_port

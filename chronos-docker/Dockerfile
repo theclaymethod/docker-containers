@@ -3,7 +3,7 @@
 # VERSION 0.1
 
 FROM ubuntu:trusty
-MAINTAINER Clay Kim <clayton.kim@gmail.com@gmail.com>
+MAINTAINER Clay Kim <clayton.kim@gmail.com>
 
 ENV VERSION_CHRONOS 2.2.0-0.1.20141002204602
 

@@ -1,0 +1,23 @@
+{
+    "id": "/chronos",
+    "instances": 1,
+    "cpus": 0.5,
+    "mem": 512,
+    "shell": "false",
+    "args": ["--master", "zk://mesos-master:2181/mesos", "--zk_hosts", "mesos-master:2181"],
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "theclaymethod/chronos",
+            "network": "BRIDGE",
+            "portMappings": [
+                {
+                    "containerPort": 8080,
+                    "hostPort": 0,
+                    "servicePort": 8081,
+                    "protocol": "tcp"
+                }
+            ]
+        }
+    }
+}

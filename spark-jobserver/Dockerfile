@@ -19,12 +19,14 @@ RUN git clone https://github.com/spark-jobserver/spark-jobserver.git $SPARK_SERV
 
 RUN mkdir $SPARK_SERVER_HOME/runner
 
+RUN echo "CACHEBUSTER2"
+
 RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-playbooks
 
 WORKDIR /tmp/docker-playbooks/spark-jobserver
 
 EXPOSE 8090
 
-RUN ansible-playbook playbook.yml -i inventory
+RUN ansible-playbook -i inventory playbook.yml
 
 ENTRYPOINT ["/$SPARK_SERVER_HOME/runner/server_start.sh"]

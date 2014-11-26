@@ -4,3 +4,5 @@ spark_home: /spark
 spark_location: "{{ lookup('env', 'SPARK_LOCATION') }}"
 mesos_master: "{{ lookup('env', 'MESOS_MASTER') }}"
 zk_endpoint: "{{ lookup('env', 'ZK_ENDPOINT') }}"
+spark_build: spark-1.1.0-bin-cdh4
+spark_download_url: "http://d3kbcqa49mib13.cloudfront.net/{{spark_build}}.tgz"

@@ -2,7 +2,7 @@ FROM theclaymethod/ansible-base
 MAINTAINER Clay Kim <clayton.kim@gmail.com>
 
 ENV SPARK_HOME /spark
-ENV SPARK_LOCATION spark_location: hdfs://foundry/tmp/spark.tgz
+ENV SPARK_LOCATION hdfs://foundry/tmp/spark.tgz
 ENV MESOS_MASTER mesos://mesos-master:5050
 ENV SPARK_SERVER_HOME /spark-jobserver/runner
 ENV ZK_ENDPOINT zk://mesos-master:2181
@@ -15,8 +15,6 @@ RUN curl -O http://apt.typesafe.com/repo-deb-build-0002.deb && \
  dpkg -i repo-deb-build-0002.deb && \
  apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y sbt
 
-
-
 #RUN mkdir $SPARK_SERVER_HOME
 
 #Install SBT
@@ -24,12 +22,10 @@ RUN mkdir -p /root/.sbt/.lib/0.13.5
 WORKDIR /root/.sbt/.lib/0.13.5
 RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar
 
-
-#COPY sbt /usr/local/bin
-
-RUN echo "CACHEBUSTER"
+#clone ansible playbook
 RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-playbooks
 
+#clone jobserver repo
 RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-jobserver
 
 WORKDIR /tmp/spark-jobserver
@@ -46,4 +42,4 @@ RUN cp /tmp/spark-jobserver/bin/server_start.sh $SPARK_SERVER_HOME && \
 
 EXPOSE 8090
 
-ENTRYPOINT ["$SPARK_SERVER_HOME/server_start.sh"]
+CMD ["/spark-jobserver/runner/server_start.sh"]

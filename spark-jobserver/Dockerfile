@@ -40,7 +40,7 @@ WORKDIR /tmp/docker-playbooks/spark-jobserver
 RUN ansible-playbook -i inventory playbook.yml
 
 RUN cp /tmp/spark-jobserver/bin/server_start.sh $SPARK_SERVER_HOME && \
-	cp /tmp/spark-jobserver/bin/server_stop.sh $SPARK_SERVER_HOME
+	cp /tmp/spark-jobserver/bin/server_stop.sh $SPARK_SERVER_HOME && \
 	cp /tmp/spark-jobserver/job-server/target/spark-job-server.jar $SPARK_SERVER_HOME
 
 

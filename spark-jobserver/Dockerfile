@@ -25,6 +25,6 @@ WORKDIR /tmp/docker-playbooks/spark-jobserver
 
 EXPOSE 8090
 
-RUN ansible-playbook playbook.yml -c local -i inventory
+RUN ansible-playbook playbook.yml -i inventory
 
 ENTRYPOINT ["/$SPARK_SERVER_HOME/runner/server_start.sh"]

@@ -1,4 +1,4 @@
 - hosts: local
   sudo: yes
   roles: 
-  - spark-job-server
+  - { role: spark-job-server }

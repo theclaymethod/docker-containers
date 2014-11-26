@@ -1,0 +1,6 @@
+---
+spark_job_server_home: "{{ lookup('env', 'SPARK_SERVER_HOME') }}"
+spark_home: /spark
+spark_location: "{{ lookup('env', 'SPARK_LOCATION') }}"
+mesos_master: "{{ lookup('env', 'MESOS_MASTER') }}"
+zk_endpoint: "{{ lookup('env', 'ZK_ENDPOINT') }}"

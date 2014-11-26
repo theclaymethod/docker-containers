@@ -1,0 +1,56 @@
+---
+
+# - name: clone spark repo 
+#   git: repo=https://github.com/spark-jobserver/spark-jobserver.git dest={{ spark_job_server_home }} version=master
+
+- name: Download spark
+  get_url: url={{ spark_download_url }} dest={{ spark_home }}.tgz
+
+- name: untar and rename spark
+  shell: sudo tar -xvf {{spark_home}}.tgz -C /home/spark/ && mv /home/spark/{{spark_build}} {{spark_home}} creates={{spark_home}}
+
+- name: create Job Server directory
+  file: state=directory path={{ spark_job_server_home }}/runner
+
+- name: copy job-server configuration files
+  template: src=local.conf.j2 dest={{ spark_job_server_home }}/runner/local.conf owner=spark group=spark mode=0644
+
+- name: copy job-server settings file
+  template: src=local.sh.j2 dest={{ spark_job_server_home }}/runner/settings.sh owner=spark group=spark mode=0644
+
+- name: copy spark configuration files
+  template: src={{ item }}.j2 dest={{ spark_home }}/conf/{{ item }} owner=spark group=spark mode=0644
+  with_items:
+  - fairscheduler.xml
+  - log4j.properties
+  - metrics.properties
+  - slaves
+  - spark-env.sh
+  tags:
+  - cdh5-spark-base
+  - cdh5-spark-base-conf
+
+# - name: Download the sbt build tool
+#   get_url: url=http://dl.bintray.com/sbt/debian/sbt-0.13.5.deb dest=/opt/src/sbt-0.13.5.deb
+
+# - name: Install sbt
+#   apt: deb=/opt/src/sbt-0.13.5.deb
+
+- name: Package Job Server
+  command: sbt job-server/assembly -mem 256 creates={{ spark_job_server_home }}/job-server/target/spark-job-server.jar
+  args:
+    chdir: "{{ spark_job_server_home }}"
+
+- name: Move files to working directory
+  command: cp {{ spark_job_server_home }}/{{ item.src }} {{ spark_job_server_home }}/runner/{{ item.dest }}
+  with_items:
+  - { src: bin/server_start.sh, dest: server_start.sh }
+  - { src: bin/server_stop.sh, dest: server_stop.sh }
+  - { src: job-server/target/spark-job-server.jar, dest: spark-job-server.jar }
+
+
+- name: Stop Job Server
+  command: "{{ spark_job_server_home }}/runner/server_stop.sh"
+
+- name: Run Job Server
+  command: "{{ spark_job_server_home }}/runner/server_start.sh"

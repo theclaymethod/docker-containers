@@ -5,16 +5,19 @@
 FROM debian:wheezy
 MAINTAINER Clay Kim <clayton.kim@gmail.com>
 
-ENV VERSION_CHRONOS 2.2.0-0.1.20141002204602
+ENV DEB_VERSION_CHRONOS 2.3.0-0.1.20141121000021
+ENV DEB_VERSION_MESOS 0.21.0-1.0.debian75
+
 
 RUN echo "deb http://repos.mesosphere.io/debian wheezy main" > /etc/apt/sources.list.d/mesosphere.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
 RUN apt-get update
 
-RUN apt-get -f -y install chronos=$VERSION_CHRONOS mesos
+RUN apt-get -f -y install chronos=$DEB_VERSION_CHRONOS mesos=$DEB_VERSION_MESOS
 
-# don't set http_port 
+# we don't want to use localhost as zk_host
 RUN rm /etc/mesos/zk
+# don't set http_port 
 RUN rm /etc/chronos/conf/http_port
 
 EXPOSE 8080

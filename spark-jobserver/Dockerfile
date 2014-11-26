@@ -25,14 +25,9 @@ RUN mkdir -p /root/.sbt/.lib/0.13.5
 WORKDIR /root/.sbt/.lib/0.13.5
 RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar
 
-RUN rm -r /tmp/docker-playbooks
-WORKDIR /tmp
 RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-playbooks
 
 WORKDIR /tmp/docker-playbooks/spark-jobserver
-
-# RUN pwd
-# RUN ls ../
 
 RUN ansible-playbook -i inventory playbook.yml
 

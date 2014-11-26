@@ -10,7 +10,7 @@
   shell: tar -C /tmp -xvf {{spark_home}}.tgz && mv /tmp/{{spark_build}} {{spark_home}} creates={{spark_home}}
 
 - name: create Job Server directory
-  file: state=directory path={{ spark_job_server_home }}/runner
+  file: state=directory path={{ spark_job_server_home }}
 
 - name: copy job-server configuration files
   template: src=local.conf.j2 dest={{ spark_job_server_home }}/local.conf #owner=spark group=spark mode=0644
@@ -42,7 +42,7 @@
     chdir: "{{ spark_job_server_home }}"
 
 - name: Move files to working directory
-  command: cp {{ spark_job_server_home }}/{{ item.src }} {{ spark_job_server_home }}/runner/{{ item.dest }}
+  command: cp {{ spark_job_server_home }}/{{ item.src }} {{ spark_job_server_home }}/{{ item.dest }}
   with_items:
   - { src: bin/server_start.sh, dest: server_start.sh }
   - { src: bin/server_stop.sh, dest: server_stop.sh }

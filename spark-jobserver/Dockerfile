@@ -11,26 +11,54 @@ ENV SPARK_BUILD spark-1.1.0-bin-cdh4
 ENV PATH /tmp/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git-core build-essential apt-utils curl
-RUN curl -O http://apt.typesafe.com/repo-deb-build-0002.deb && \
- dpkg -i repo-deb-build-0002.deb && \
- apt-get update && \
- DEBIAN_FRONTEND=noninteractive apt-get install -y sbt
+# RUN curl -O http://apt.typesafe.com/repo-deb-build-0002.deb && \
+#  dpkg -i repo-deb-build-0002.deb && \
+#  apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y sbt
 
 RUN git clone https://github.com/spark-jobserver/spark-jobserver.git
 
 #RUN mkdir $SPARK_SERVER_HOME
 
 #Install SBT
-RUN mkdir -p /root/.sbt/.lib/0.13.5
-WORKDIR /root/.sbt/.lib/0.13.5
-RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar
+# RUN mkdir -p /root/.sbt/.lib/0.13.5
+# WORKDIR /root/.sbt/.lib/0.13.5
+# RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar
+
+ENV SCALA_TARBALL http://www.scala-lang.org/files/archive/scala-2.11.4.deb
+ENV SBT_JAR       https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.6/sbt-launch.jar
+
+RUN \
+    echo "===> install from Typesafe repo (contains old versions but they have all dependencies we need later on)"  && \
+    DEBIAN_FRONTEND=noninteractive \
+        apt-get install -y --force-yes wget  && \
+    wget http://apt.typesafe.com/repo-deb-build-0002.deb  && \
+    dpkg -i repo-deb-build-0002.deb  && \
+    apt-get update  && \
+    \
+    # echo "===> install Scala"  && \
+    # DEBIAN_FRONTEND=noninteractive \
+    #     apt-get install -y --force-yes libjansi-java  && \
+    # wget -nv $SCALA_TARBALL  && \
+    # dpkg -i scala-*.deb   && \
+    # \
+    # \
+    \
+    echo "===> install sbt"  && \
+    wget -nv -P /usr/local/bin/  $SBT_JAR    && \
+    \
+    echo "===> clean up..."  && \
+    rm -f *.deb  && \
+    apt-get clean
+
+
+#COPY sbt /usr/local/bin
 
 RUN echo "CACHEBUSTER"
 RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-playbooks
 
 WORKDIR /tmp/docker-playbooks/spark-jobserver
 
-RUN sbt job-server/assembly -mem 256
+RUN sbt job-server/assembly
 
 RUN ansible-playbook -i inventory playbook.yml
 

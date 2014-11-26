@@ -19,4 +19,4 @@ EXPOSE 8090
 
 RUN ansible-playbook playbook.yml -c local
 
-ENTRYPOINT ["/$SPARK_SERVER_HOME/runner/server_start.sh""]
+ENTRYPOINT ["/$SPARK_SERVER_HOME/runner/server_start.sh"]

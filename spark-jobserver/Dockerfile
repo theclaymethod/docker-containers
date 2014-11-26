@@ -20,9 +20,9 @@ RUN curl -O http://apt.typesafe.com/repo-deb-build-0002.deb && \
 #RUN mkdir $SPARK_SERVER_HOME
 
 #Install SBT
-RUN mkdir -p /root/.sbt/.lib/0.13.6
-WORKDIR /root/.sbt/.lib/0.13.6
-RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.6/sbt-launch.jar
+RUN mkdir -p /root/.sbt/.lib/0.13.5
+WORKDIR /root/.sbt/.lib/0.13.5
+RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar
 
 
 #COPY sbt /usr/local/bin

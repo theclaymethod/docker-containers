@@ -19,7 +19,7 @@ RUN curl -O http://apt.typesafe.com/repo-deb-build-0002.deb && \
 
 #RUN mkdir $SPARK_SERVER_HOME
 
-Install SBT
+#Install SBT
 RUN mkdir -p /root/.sbt/.lib/0.13.6
 WORKDIR /root/.sbt/.lib/0.13.6
 RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.6/sbt-launch.jar
@@ -33,18 +33,16 @@ RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-pla
 RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-jobserver
 
 WORKDIR /tmp/spark-jobserver
-
 RUN sbt job-server/assembly
 
 WORKDIR /tmp/docker-playbooks/spark-jobserver
 
 RUN ansible-playbook -i inventory playbook.yml
 
-RUN cp /tmp/spark-jobserverbin/server_start.sh $SPARK_SERVER_HOME && \
-	cp /tmp/spark-jobserverbin/server_stop.sh $SPARK_SERVER_HOME
+RUN cp /tmp/spark-jobserver/bin/server_start.sh $SPARK_SERVER_HOME && \
+	cp /tmp/spark-jobserver/bin/server_stop.sh $SPARK_SERVER_HOME
 	cp /tmp/spark-jobserver/job-server/target/spark-job-server.jar $SPARK_SERVER_HOME
 
-RUN rm -r /tmp/*
 
 EXPOSE 8090
 

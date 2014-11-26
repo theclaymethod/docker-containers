@@ -38,4 +38,4 @@ RUN ansible-playbook -i inventory playbook.yml
 
 EXPOSE 8090
 
-#ENTRYPOINT ["/spark-jobserver/runner/server_start.sh"]
+ENTRYPOINT ["spark-jobserver/runner/server_start.sh"]

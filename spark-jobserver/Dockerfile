@@ -25,12 +25,19 @@ RUN mkdir -p /root/.sbt/.lib/0.13.5
 WORKDIR /root/.sbt/.lib/0.13.5
 RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar
 
+RUN echo "CACHEBUSTER"
 RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-playbooks
 
 WORKDIR /tmp/docker-playbooks/spark-jobserver
 
+RUN sbt job-server/assembly -mem 256
+
 RUN ansible-playbook -i inventory playbook.yml
+
+RUN cp bin/server_start.sh $SPARK_SERVER_HOME && \
+	cp bin/server_stop.sh $SPARK_SERVER_HOME
+	cp job-server/target/spark-job-server.jar $SPARK_SERVER_HOME
 
 EXPOSE 8090
 
-ENTRYPOINT ["spark-jobserver/runner/server_start.sh"]
+ENTRYPOINT ["$SPARK_SERVER_HOME/server_start.sh"]

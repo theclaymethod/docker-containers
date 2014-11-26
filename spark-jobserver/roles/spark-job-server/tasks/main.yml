@@ -36,17 +36,17 @@
 # - name: Install sbt
 #   apt: deb=/opt/src/sbt-0.13.5.deb
 
-- name: Package Job Server
-  command: sbt job-server/assembly -mem 256 creates={{ spark_job_server_home }}/job-server/target/spark-job-server.jar
-  args:
-    chdir: "{{ spark_job_server_home }}"
+# - name: Package Job Server
+#   command: sbt job-server/assembly -mem 256
+#   args:
+#     chdir: "/spark-jobserver"
 
-- name: Move files to working directory
-  command: cp {{ spark_job_server_home }}/{{ item.src }} {{ spark_job_server_home }}/{{ item.dest }}
-  with_items:
-  - { src: bin/server_start.sh, dest: server_start.sh }
-  - { src: bin/server_stop.sh, dest: server_stop.sh }
-  - { src: job-server/target/spark-job-server.jar, dest: spark-job-server.jar }
+# - name: Move files to working directory
+#   command: cp {{ spark_job_server_home }}/{{ item.src }} {{ spark_job_server_home }}/{{ item.dest }}
+#   with_items:
+#   - { src: bin/server_start.sh, dest: server_start.sh }
+#   - { src: bin/server_stop.sh, dest: server_stop.sh }
+#   - { src: job-server/target/spark-job-server.jar, dest: spark-job-server.jar }
 
 
 # - name: Stop Job Server

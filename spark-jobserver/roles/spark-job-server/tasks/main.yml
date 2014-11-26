@@ -7,7 +7,7 @@
   get_url: url={{ spark_download_url }} dest={{ spark_home }}.tgz
 
 - name: untar and rename spark
-  shell: tar -xvf {{spark_home}}.tgz -C /home/spark/ && mv {{spark_build}} {{spark_home}} creates={{spark_home}}
+  shell: tar -C {{spark_home}} -xvf {{spark_home}}.tgz # && mv {{spark_build}} {{spark_home}} creates={{spark_home}}
 
 - name: create Job Server directory
   file: state=directory path={{ spark_job_server_home }}/runner

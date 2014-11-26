@@ -7,7 +7,7 @@ ENV MESOS_MASTER mesos://mesos-master:5050
 ENV SPARK_SERVER_HOME /spark-jobserver/runner
 ENV ZK_ENDPOINT zk://mesos-master:2181
 #Install the repository
-ENV PATH /tmp/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+ENV PATH /tmp/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git-core build-essential apt-utils curl
 RUN curl -O http://apt.typesafe.com/repo-deb-build-0002.deb && \

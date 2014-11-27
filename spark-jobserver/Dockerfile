@@ -7,6 +7,7 @@ ENV MESOS_MASTER mesos://mesos-master:5050
 ENV SPARK_SERVER_HOME /spark-jobserver/runner
 ENV ZK_ENDPOINT zk://mesos-master:2181
 ENV SPARK_BUILD spark-1.1.0-bin-cdh4
+ENV MESOS_HOME /usr/local/lib/libmesos.so
 #Install the repository
 ENV PATH /tmp/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH
 
@@ -39,6 +40,14 @@ RUN cp /tmp/spark-jobserver/bin/server_start.sh $SPARK_SERVER_HOME && \
 	cp /tmp/spark-jobserver/bin/server_stop.sh $SPARK_SERVER_HOME && \
 	cp /tmp/spark-jobserver/job-server/target/spark-job-server.jar $SPARK_SERVER_HOME
 
+
+ENV DEB_VERSION_MESOS 0.21.0-1.0.debian77
+
+RUN echo "deb http://repos.mesosphere.io/debian wheezy main" > /etc/apt/sources.list.d/mesosphere.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
+RUN apt-get update
+
+RUN apt-get -f -y install mesos=$DEB_VERSION_MESOS
 
 EXPOSE 8090
 

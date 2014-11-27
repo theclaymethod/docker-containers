@@ -30,7 +30,8 @@ RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-pla
 RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-jobserver
 
 WORKDIR /tmp/spark-jobserver
-RUN sbt job-server/assembly
+RUN sbt job-server/assembly 
+RUN mkdir -p $SPARK_SERVER_HOME
 
 RUN cp /tmp/spark-jobserver/bin/server_start.sh $SPARK_SERVER_HOME && \
 	cp /tmp/spark-jobserver/bin/server_stop.sh $SPARK_SERVER_HOME && \

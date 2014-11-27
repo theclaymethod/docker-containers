@@ -45,10 +45,10 @@
     state: present
 
 - name: make docker_server_start executable
-  cmd:  chmod +x docker_server_start.sh
+  command:  chmod +x docker_server_start.sh
 
 - name: run docker_server_start
-  cmd: chdir=/spark-jobserver/runner/ ./docker_server_start.sh 
+  command: chdir=/spark-jobserver/runner/ ./docker_server_start.sh 
 
 
 # - name: copy supervisor conf

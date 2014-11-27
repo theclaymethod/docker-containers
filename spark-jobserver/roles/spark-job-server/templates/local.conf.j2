@@ -13,6 +13,8 @@ spark {
     port = 8090
     jar-store-rootdir = /tmp/jobserver/jars
 
+    context-creation-timeout = "60 s"
+
     jobdao = spark.jobserver.io.JobFileDAO
 
     filedao {
@@ -35,7 +37,7 @@ spark {
     memory-per-node = 512m         # Executor memory per node, -Xmx style eg 512m, #1G, etc.
 
     # in case spark distribution should be accessed from HDFS (as opposed to being installed on every mesos slave)
-    # spark.executor.uri = "{{ spark_location }}"
+    spark.executor.uri = "{{ spark_location }}"
 
     # uris of jars to be loaded into the classpath for this context
     # dependent-jar-uris = ["file:///some/path/present/in/each/mesos/slave/somepackage.jar"]

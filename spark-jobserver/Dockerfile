@@ -51,4 +51,5 @@ RUN apt-get -f -y install mesos=$DEB_VERSION_MESOS
 
 EXPOSE 8090
 
-CMD ["/spark-jobserver/runner/server_start.sh"]
+WORKDIR /spark-jobserver/runner/
+CMD ./server_start.sh

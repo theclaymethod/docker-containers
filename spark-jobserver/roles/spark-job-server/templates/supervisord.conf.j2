@@ -1,0 +1,7 @@
+[supervisord]
+nodaemon=true
+loglevel=debug
+
+[program:jobserver]
+redirect_stderr=true
+command=/bin/bash -c /spark-jobserver/runner/server-start.sh

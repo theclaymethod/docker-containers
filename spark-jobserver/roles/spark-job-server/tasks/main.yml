@@ -30,6 +30,9 @@
   - cdh5-spark-base
   - cdh5-spark-base-conf
 
+- name: copy supervisor conf
+  template: src=supervisord.conf.js dest=/etc/supervisor/conf.d/supervisord.conf
+
 # - name: Download the sbt build tool
 #   get_url: url=http://dl.bintray.com/sbt/debian/sbt-0.13.5.deb dest=/opt/src/sbt-0.13.5.deb
 

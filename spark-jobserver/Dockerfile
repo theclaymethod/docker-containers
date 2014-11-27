@@ -51,5 +51,6 @@ RUN apt-get -f -y install mesos=$DEB_VERSION_MESOS
 
 EXPOSE 8090
 
-#WORKDIR /spark-jobserver/runner/
-CMD /usr/bin/supervisord
+WORKDIR /spark-jobserver/runner/
+#CMD /usr/bin/supervisord
+CMD ./docker-server-start.sh

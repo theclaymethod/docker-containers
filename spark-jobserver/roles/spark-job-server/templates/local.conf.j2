@@ -7,13 +7,13 @@ spark {
   master = "{{ mesos_master }}"
 
   # Default # of CPUs for jobs to use for Spark standalone cluster
-  job-number-cpus = 4
+  job-number-cpus = 2
 
   jobserver {
     port = 8090
     jar-store-rootdir = /tmp/jobserver/jars
 
-    context-creation-timeout = "60 s"
+    context-creation-timeout = "10 s"
 
     jobdao = spark.jobserver.io.JobFileDAO
 

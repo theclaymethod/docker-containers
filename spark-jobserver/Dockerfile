@@ -32,26 +32,30 @@ RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-
 WORKDIR /tmp/spark-jobserver
 RUN sbt job-server/assembly
 
-WORKDIR /tmp/docker-playbooks/spark-jobserver
-
-RUN ansible-playbook -i inventory playbook.yml
-
 RUN cp /tmp/spark-jobserver/bin/server_start.sh $SPARK_SERVER_HOME && \
 	cp /tmp/spark-jobserver/bin/server_stop.sh $SPARK_SERVER_HOME && \
 	cp /tmp/spark-jobserver/job-server/target/spark-job-server.jar $SPARK_SERVER_HOME
 
-
+#Install Mesos
 ENV DEB_VERSION_MESOS 0.21.0-1.0.debian77
 
-RUN echo "deb http://repos.mesosphere.io/debian wheezy main" > /etc/apt/sources.list.d/mesosphere.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
-RUN apt-get update
+# RUN echo "deb http://repos.mesosphere.io/debian wheezy main" > /etc/apt/sources.list.d/mesosphere.list
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
+# RUN apt-get update
 
-RUN apt-get -f -y install mesos=$DEB_VERSION_MESOS
+# RUN apt-get -f -y install mesos=$DEB_VERSION_MESOS
 
 EXPOSE 8090
 
-WORKDIR /spark-jobserver/runner/
-RUN chmod +x docker_server_start.sh
-#CMD /usr/bin/supervisord
-CMD ./docker_server_start.sh
+WORKDIR /tmp/docker-playbooks/spark-jobserver
+
+CMD ansible-playbook -i inventory playbook.yml
+
+
+
+
+
+# WORKDIR /spark-jobserver/runner/
+# RUN chmod +x docker_server_start.sh
+# #CMD /usr/bin/supervisord
+# CMD ./docker_server_start.sh

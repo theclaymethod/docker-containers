@@ -33,6 +33,24 @@
 - name: copy server_start 
   template: src=docker_server_start.sh.j2 dest={{ spark_job_server_home }}/docker_server_start.sh
 
+- name: create mesosphere repo
+  apt_repository: repo='deb http://repos.mesosphere.io/ubuntu trusty main' state=present
+
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: Install mesos
+  apt:
+    pkg: "mesos={{ mesos_version }}"
+    state: present
+
+- name: make docker_server_start executable
+  cmd:  chmod +x docker_server_start.sh
+
+- name: run docker_server_start
+  cmd: chdir=/spark-jobserver/runner/ ./docker_server_start.sh 
+
+
 # - name: copy supervisor conf
 #   template: src=supervisord.conf.j2 dest=/etc/supervisor/conf.d/supervisord.conf
 

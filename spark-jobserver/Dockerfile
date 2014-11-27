@@ -11,7 +11,7 @@ ENV MESOS_HOME /usr/local/lib/libmesos.so
 #Install the repository
 ENV PATH /tmp/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git-core build-essential apt-utils curl supervisor
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y git-core build-essential apt-utils curl
 RUN curl -O http://apt.typesafe.com/repo-deb-build-0002.deb && \
  dpkg -i repo-deb-build-0002.deb && \
  apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y sbt

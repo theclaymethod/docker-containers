@@ -45,7 +45,7 @@
 
 - name: Install mesos
   apt:
-    pkg: mesos#={{ mesos_version }}
+    pkg: mesos
     state: present
 
 - name: make docker_server_start executable

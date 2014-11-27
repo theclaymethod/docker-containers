@@ -12,3 +12,6 @@ SPARK_HOME={{ spark_home }}
 SPARK_CONF_HOME={{ spark_home }}/conf
 # Only needed for Mesos deploys
 SPARK_EXECUTOR_URI={{ spark_location }}
+
+MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
+MASTER={{ zk_endpoint }}/mesos

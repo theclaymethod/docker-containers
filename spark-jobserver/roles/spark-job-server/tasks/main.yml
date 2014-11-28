@@ -50,7 +50,8 @@
 #     force: yes
 
 - name: make docker_server_start executable
-  command:  chmod +x docker_server_start.sh
+  command: chdir=/spark-jobserver/runner/ chmod +x docker_server_start.sh
+
 
 - name: run docker_server_start
   command: chdir=/spark-jobserver/runner/ ./docker_server_start.sh 

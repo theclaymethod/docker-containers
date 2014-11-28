@@ -48,6 +48,12 @@ RUN apt-get -f -y install mesos=$DEB_VERSION_MESOS
 
 EXPOSE 8090
 
+WORKDIR /tmp
+RUN curl -O http://d3kbcqa49mib13.cloudfront.net/$SPARK_BUILD.tgz && \
+	tar -xvf $SPARK_BUILD.tgz && \
+	mv $SPARK_BUILD /spark
+
+
 WORKDIR /tmp/docker-playbooks/spark-jobserver
 
 CMD ansible-playbook -i inventory playbook.yml

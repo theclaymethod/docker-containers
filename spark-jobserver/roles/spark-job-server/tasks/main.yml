@@ -12,11 +12,11 @@
 # - name: create Job Server directory
 #   file: state=directory path={{ spark_job_server_home }}
 
-# - name: copy job-server configuration files
-#   template: src=local.conf.j2 dest={{ spark_job_server_home }}/local.conf #owner=spark group=spark mode=0644
+- name: copy job-server configuration files
+  template: src=local.conf.j2 dest={{ spark_job_server_home }}/local.conf #owner=spark group=spark mode=0644
 
-# - name: copy job-server settings file
-#   template: src=local.sh.j2 dest={{ spark_job_server_home }}/settings.sh #owner=spark group=spark mode=0644
+- name: copy job-server settings file
+  template: src=local.sh.j2 dest={{ spark_job_server_home }}/settings.sh #owner=spark group=spark mode=0644
 
 # - name: copy spark configuration files
 #   template: src={{ item }}.j2 dest={{ spark_home }}/conf/{{ item }} #owner=spark group=spark mode=0644

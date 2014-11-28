@@ -43,10 +43,11 @@
 - name: Update apt cache
   apt: update_cache=yes cache_valid_time=3600
 
-- name: Install mesos
-  apt:
-    pkg: mesos
-    state: present
+# - name: Install mesos
+#   apt:
+#     pkg: mesos
+#     state: present
+#     force: yes
 
 - name: make docker_server_start executable
   command:  chmod +x docker_server_start.sh

@@ -40,11 +40,11 @@ RUN cp /tmp/spark-jobserver/bin/server_start.sh $SPARK_SERVER_HOME && \
 #Install Mesos
 ENV DEB_VERSION_MESOS 0.21.0-1.0.debian77
 
-# RUN echo "deb http://repos.mesosphere.io/debian wheezy main" > /etc/apt/sources.list.d/mesosphere.list
-# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
-# RUN apt-get update
+RUN echo "deb http://repos.mesosphere.io/debian wheezy main" > /etc/apt/sources.list.d/mesosphere.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
+RUN apt-get update
 
-# RUN apt-get -f -y install mesos=$DEB_VERSION_MESOS
+RUN apt-get -f -y install mesos=$DEB_VERSION_MESOS
 
 EXPOSE 8090
 

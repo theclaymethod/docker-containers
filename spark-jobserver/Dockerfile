@@ -52,8 +52,8 @@ RUN curl -O http://d3kbcqa49mib13.cloudfront.net/$SPARK_BUILD.tgz && \
 	rm $SPARK_BUILD.tgz
 
 
-WORKDIR /tmp/docker-playbooks/spark-jobserver
-
+WORKDIR /tmp
 #clone ansible playbook
 RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-playbooks
+WORKDIR /tmp/docker-playbooks/spark-jobserver
 CMD ansible-playbook -i inventory playbook.yml

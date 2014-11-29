@@ -3,7 +3,7 @@ MAINTAINER Clay Kim <clayton.kim@gmail.com>
 
 ENV SPARK_HOME /spark
 ENV SPARK_LOCATION hdfs://foundry/tmp/spark.tgz
-ENV MESOS_MASTER mesos://mesos-master:5050
+ENV MESOS_MASTER zk://mesos-master.foundry.project.com:2181/mesos
 ENV SPARK_SERVER_HOME /spark-jobserver/runner
 ENV ZK_ENDPOINT zk://mesos-master:2181
 ENV SPARK_BUILD spark-1.1.0-bin-cdh4
@@ -19,21 +19,20 @@ RUN echo "deb http://repos.mesosphere.io/debian wheezy main" > /etc/apt/sources.
 	curl -O http://apt.typesafe.com/repo-deb-build-0002.deb && \
 	dpkg -i repo-deb-build-0002.deb && \
 	apt-get update && \
-	apt-get install -y --no-install-recommends sbt git-core build-essential apt-utils mesos=$DEB_VERSION_MESOS &&\
+	apt-get install -y --no-install-recommends sbt \
+		git-core \
+		build-essential \
+		apt-utils \
+		mesos=$DEB_VERSION_MESOS && \
 	rm repo-deb-build-0002.deb 
 
-#RUN mkdir $SPARK_SERVER_HOME
 
 #Install SBT
 RUN mkdir -p /root/.sbt/.lib/0.13.5
 WORKDIR /root/.sbt/.lib/0.13.5
 RUN curl -O http://typesafe.artifactoryonline.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.5/sbt-launch.jar
 
-#clone ansible playbook
-RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-playbooks
-
 #clone jobserver repo
-
 RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-jobserver && \ 
 	cd /tmp/spark-jobserver && \
 	sbt job-server/assembly && \
@@ -43,9 +42,8 @@ RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-
 	cp /tmp/spark-jobserver/job-server/target/spark-job-server.jar $SPARK_SERVER_HOME && \
 	rm -rf /tmp/spark-jobserver
 
-#Install Mesos
 
-EXPOSE 8090
+EXPOSE 8090 8091 7077 7078 4040
 
 WORKDIR /tmp
 RUN curl -O http://d3kbcqa49mib13.cloudfront.net/$SPARK_BUILD.tgz && \
@@ -56,13 +54,6 @@ RUN curl -O http://d3kbcqa49mib13.cloudfront.net/$SPARK_BUILD.tgz && \
 
 WORKDIR /tmp/docker-playbooks/spark-jobserver
 
+#clone ansible playbook
+RUN git clone https://github.com/theclaymethod/docker-containers /tmp/docker-playbooks
 CMD ansible-playbook -i inventory playbook.yml
-
-
-
-
-
-# WORKDIR /spark-jobserver/runner/
-# RUN chmod +x docker_server_start.sh
-# #CMD /usr/bin/supervisord
-# CMD ./docker_server_start.sh

@@ -2,7 +2,7 @@
 spark_job_server_home: "{{ lookup('env', 'SPARK_SERVER_HOME') }}"
 spark_home: /spark
 spark_location: "{{ lookup('env', 'SPARK_LOCATION') }}"
-mesos_master: "{{ mesos_master }}"
+mesos_master: "{{ lookup('env', 'MESOS_MASTER') }}"
 mesos_version: "{{ lookup('env', 'DEB_VERSION_MESOS') }}"
 zk_endpoint: "{{ lookup('env', 'ZK_ENDPOINT') }}"
 spark_build: spark-1.1.0-bin-cdh4

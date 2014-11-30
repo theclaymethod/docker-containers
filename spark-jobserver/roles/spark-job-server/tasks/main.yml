@@ -26,6 +26,7 @@
   - metrics.properties
   - slaves
   - spark-env.sh
+  - spark-defaults.sh
   tags:
   - cdh5-spark-base
   - cdh5-spark-base-conf

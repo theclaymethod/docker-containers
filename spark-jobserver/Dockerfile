@@ -65,6 +65,6 @@ EXPOSE 8090 8091 7077 7078 4040
 WORKDIR /tmp
 #clone ansible playbook
 
-RUN git clone --branch experimental https://github.com/docker-containers.git /tmp/docker-playbooks
+RUN git clone --branch experimental https://github.com/theclaymethod/docker-containers.git /tmp/docker-playbooks
 WORKDIR /tmp/docker-playbooks/spark-jobserver
 CMD ansible-playbook -i inventory playbook.yml

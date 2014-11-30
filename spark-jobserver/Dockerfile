@@ -60,7 +60,7 @@ RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-
 	cp /tmp/spark-jobserver/job-server/target/spark-job-server.jar $SPARK_SERVER_HOME && \
 	rm -rf /tmp/spark-jobserver
 
-EXPOSE 8090 8091 7077 7078 4040
+EXPOSE 8090 8091 7077 7078 4040 40880
 
 WORKDIR /tmp
 #clone ansible playbook

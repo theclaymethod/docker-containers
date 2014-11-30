@@ -38,6 +38,8 @@ export SPARK_WORKER_WEBUI_PORT=4040
 export SPARK_WORKER_DIR=/var/run/spark/work
 export SPARK_LOG_DIR=/var/log/spark
 
+export SPARK_JAVA_OPTS="-Dspark.driver.port=40880" 
+
 # if [ -n "$HADOOP_HOME" ]; then
 #   export SPARK_LIBRARY_PATH=$SPARK_LIBRARY_PATH:${HADOOP_HOME}/lib/native
 # fi

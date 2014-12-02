@@ -5,10 +5,21 @@ This is a Docker Container for Running Spark's Job Server on Mesos using Maratho
 Configure by overriding environment variables:
 
 ```
-ENV SPARK_HOME /spark
-ENV SPARK_LOCATION spark_location: hdfs://foundry/tmp/spark.tgz
-ENV MESOS_MASTER mesos://mesos-master:5050
-ENV SPARK_SERVER_HOME /spark-jobserver/runner
-ENV ZK_ENDPOINT zk://mesos-master:2181
-ENV SPARK_BUILD spark-1.1.0-bin-cdh4
+{
+    "id": "/spark-jobserver",
+    "instances": 1,
+    "cpus": 0.25,
+    "mem": 512,
+    "env": {
+        "MESOS_MASTER": "zk://100.0.10.11:2181/mesos"
+    },
+    "container": {
+        "type": "DOCKER",
+        "docker": {
+            "image": "theclaymethod/spark-jobserver-mesos",
+            "network": "HOST"
+        }
+    },
+    "ports" : [8090]
+}
 ```

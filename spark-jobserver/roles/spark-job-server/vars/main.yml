@@ -7,3 +7,4 @@ mesos_version: "{{ lookup('env', 'DEB_VERSION_MESOS') }}"
 zk_endpoint: "{{ lookup('env', 'ZK_ENDPOINT') }}"
 spark_build: spark-1.1.0-bin-cdh4
 spark_download_url: "http://d3kbcqa49mib13.cloudfront.net/{{spark_build}}.tgz"
+spark_jobserver_port: "{{ lookup('env', 'PORT') }}"

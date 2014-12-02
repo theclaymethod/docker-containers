@@ -10,7 +10,7 @@ spark {
   job-number-cpus = 2
 
   jobserver {
-    port = 8090
+    port = {{ spark_jobserver_port }}
     jar-store-rootdir = /tmp/jobserver/jars
 
     context-creation-timeout = "10 s"

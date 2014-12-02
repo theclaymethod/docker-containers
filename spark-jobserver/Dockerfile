@@ -9,6 +9,7 @@ ENV ZK_ENDPOINT zk://mesos-master:2181
 ENV SPARK_BUILD spark-1.1.0-bin-cdh4
 ENV MESOS_HOME /usr/local/lib/libmesos.so
 ENV DEB_VERSION_MESOS 0.21.0-1.0.debian77
+ENV PORT 8090
 
 #Install the repository
 ENV PATH /tmp/ansible/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH
@@ -43,7 +44,7 @@ RUN git clone https://github.com/spark-jobserver/spark-jobserver.git /tmp/spark-
 	rm -rf /tmp/spark-jobserver
 
 
-EXPOSE 8090 8091 7077 7078 4040
+EXPOSE 8090
 
 WORKDIR /tmp
 RUN curl -O http://d3kbcqa49mib13.cloudfront.net/$SPARK_BUILD.tgz && \
